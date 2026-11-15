@@ -88,3 +88,55 @@
 @media print {
   .toolbar-label::after {content:none}
 }
+
+
+/* Порядок дій у місіях 19–20: чіткі великі цифри на телефоні. */
+.task-card .task-steps {
+  counter-reset:mission-step;
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  gap:11px;
+}
+.task-card .task-steps li {
+  counter-increment:mission-step;
+  position:relative;
+  padding:2px 0 3px 40px;
+  min-height:32px;
+  color:var(--text);
+  line-height:1.52;
+  font-size:15px;
+}
+.task-card .task-steps li::before {
+  content:counter(mission-step);
+  position:absolute;
+  left:0;
+  top:0;
+  width:29px;
+  height:29px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  background:#375da1;
+  border:1px solid #7295d7;
+  color:#fff;
+  font-size:14px;
+  font-weight:850;
+  font-variant-numeric:tabular-nums;
+}
+.task-card .task-steps li b {color:#d3e4ff;font-weight:800}
+.task-card .criteria {
+  margin-top:4px;
+  padding-top:10px;
+  border-top:1px solid var(--line);
+}
+@media (max-width:720px) {
+  .task-card .task-steps {gap:9px}
+  .task-card .task-steps li {font-size:13.5px;line-height:1.48;padding:2px 0 2px 36px;min-height:28px}
+  .task-card .task-steps li::before {width:27px;height:27px;font-size:13px;border-radius:8px}
+  .task-card .criteria {margin-top:3px;padding-top:9px}
+}
+@media print {
+  .task-card .task-steps li::before {color:#000;background:#fff;border:1px solid #555}
+}
