@@ -51,6 +51,56 @@ function file(){return new File([downloadable()],($("docTitle").value.trim()||"�
 function download(f){let u=URL.createObjectURL(f),a=document.createElement("a");a.href=u;a.download=f.name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1200)}
 $("downloadDoc").onclick=()=>{download(file());tip("Документ завантажено як HTML")};
 $("shareDoc").onclick=async()=>{let f=file();if(navigator.canShare?.({files:[f]})&&navigator.share){try{await navigator.share({files:[f],title:"Мій документ"});return}catch(e){if(e.name==="AbortError")return}}download(f);tip("Файл збережено. Надішли його вчителю звичним способом.")};
+/* Надсилання роботи через зовнішній сервіс FormSubmit після підтвердження учнем. */
+const sendDialog=$("sendDialog"),sendForm=$("sendForm"),nameField=$("studentName"),studentClass=$("studentClass");
+try{nameField.value=localStorage.getItem("word6v-student-name")||""}catch(e){}
+function closeSend(){sendDialog.hidden=true;$("sendToTeacher").focus()}
+function openSend(){
+  const f=file();
+  $("sendFileSize").textContent="Вкладення: "+f.name+" · "+(f.size/1024).toFixed(0)+" КБ";
+  if(f.size>9.5*1024*1024){tip("Файл завеликий (до 10 МБ). Видали або заміни важкі зображення.");return}
+  sendDialog.hidden=false;
+  setTimeout(()=>nameField.focus(),0);
+}
+$("sendToTeacher").onclick=openSend;
+$("closeSendDialog").onclick=closeSend;
+$("cancelSendDialog").onclick=closeSend;
+sendDialog.addEventListener("click",e=>{if(e.target===sendDialog)closeSend()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!sendDialog.hidden)closeSend()});
+nameField.oninput=()=>nameField.setCustomValidity("");
+sendForm.addEventListener("submit",e=>{
+  e.preventDefault();
+  const student=nameField.value.trim().replace(/[\r\n<>]/g," ").slice(0,100);
+  const cls=studentClass.value.trim().replace(/[\r\n<>]/g," ").slice(0,20);
+  if(student.length<3){nameField.setCustomValidity("Укажи ім’я та прізвище");nameField.reportValidity();return}
+  nameField.setCustomValidity("");
+  if(!cls){studentClass.reportValidity();return}
+  const f=file();
+  if(f.size>9.5*1024*1024){tip("Файл завеликий (до 10 МБ). Зменши кількість зображень.");return}
+  try{
+    const dt=new DataTransfer();
+    dt.items.add(f);
+    $("mailAttachment").files=dt.files;
+    if(!$("mailAttachment").files.length)throw Error("Файл не прикріплено");
+  }catch(err){
+    download(f);
+    tip("Не вдалось прикріпити файл. Документ завантажено — надішли його через свою пошту.");
+    return;
+  }
+  const title=($("docTitle").value.trim()||"Мій документ").replace(/[\r\n<>]/g," ").slice(0,100);
+  const checked=[...document.querySelectorAll("[data-done]:checked")].map(x=>x.dataset.done).join(", ");
+  $("mailSubject").value="Інформатика 6-В · Уроки 19–20 · "+student;
+  $("mailDocTitle").value=title;
+  $("mailProgress").value=checked||"Немає відміток";
+  nameField.value=student;
+  studentClass.value=cls;
+  try{localStorage.setItem("word6v-student-name",student)}catch(e){}
+  // HTML-форма відкриває відповідь FormSubmit у новій вкладці.
+  // Лише відповідь сервісу підтвердить прийняття. Не показуємо хибного "Надіслано".
+  HTMLFormElement.prototype.submit.call(sendForm);
+  sendDialog.hidden=true;
+  tip("Відкриється сторінка сервісу. Перевір підтвердження надсилання. Якщо його немає — повідом учителю.");
+});
 $("printDoc").onclick=()=>{go("editor");window.print()};
 document.querySelectorAll("[data-guide]").forEach(b=>b.onclick=()=>{go("guide");document.getElementById(b.dataset.guide)?.scrollIntoView({behavior:"smooth",block:"center"})});
 if(!ed.innerHTML.trim())ed.innerHTML="<h1>Мій документ</h1><p>Напиши тут текст…</p>";
