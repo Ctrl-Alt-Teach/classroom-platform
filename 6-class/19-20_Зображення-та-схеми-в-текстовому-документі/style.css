@@ -140,3 +140,46 @@
 @media print {
   .task-card .task-steps li::before {color:#000;background:#fff;border:1px solid #555}
 }
+
+
+/* Вибір класу на одному сайті: 6-А і 6-Б — спрощена версія на 1 урок. */
+.class-switch {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  margin:0 0 10px;
+}
+.class-choice {
+  border:1px solid #556b91;
+  background:#263550;
+  color:#e3edff;
+  border-radius:10px;
+  min-height:42px;
+  padding:7px 11px;
+  font-weight:800;
+  font-size:16px;
+}
+.class-choice[aria-pressed="true"] {
+  background:#628efa;
+  color:#fff;
+  border-color:#a8c1ff;
+  box-shadow:0 0 0 2px #10151d inset;
+}
+.class-choice:focus-visible {outline:3px solid #ffe59b;outline-offset:2px}
+.class-description {
+  color:#bed1f8;
+  font-size:13px;
+  font-weight:650;
+  margin:0 0 12px;
+}
+.task-set[hidden]{display:none!important}
+.task-easy-note {color:#e2edff;font-size:14px;line-height:1.5}
+@media(max-width:720px) {
+  .class-switch{gap:5px;margin-bottom:8px}
+  .class-choice{font-size:14px;min-height:39px;padding:5px 7px;border-radius:8px}
+  .class-description{font-size:12px;margin-bottom:8px}
+  .task-easy-note{font-size:13px}
+}
+@media print {
+  .class-switch{display:none}
+}
