@@ -1,4 +1,187 @@
-<!doctype html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Word Навчальний редактор — 6-В</title><style>
-:root{font-family:Arial,sans-serif;color:#222;background:#e8edf4}*{box-sizing:border-box}body{margin:0}.top{background:#185abd;color:white;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px}.top input{background:#ffffff20;border:1px solid #ffffff70;border-radius:5px;color:white;padding:7px;min-width:0;width:210px}.top input::placeholder{color:#eee}.tabs{display:flex;gap:3px;background:#f8fafc;padding:7px 8px 0;overflow:auto}.tab{border:0;background:transparent;padding:11px 16px;white-space:nowrap;font-weight:600}.tab.active{background:white;border-bottom:3px solid #185abd;color:#185abd}.ribbon{background:white;display:flex;align-items:center;gap:6px;overflow-x:auto;padding:10px;min-height:76px;border-bottom:1px solid #ccd3de}.ribbon[hidden]{display:none}.tool{border:1px solid #d2d8e2;background:#f8fafc;border-radius:6px;padding:9px 11px;min-height:42px;white-space:nowrap;font-size:14px}.tool:active{background:#dbeafe}.tool select{border:0;background:transparent}.separator{height:36px;border-left:1px solid #ddd;margin:0 4px}.workspace{padding:20px 10px 80px;overflow:auto}.paper{background:white;max-width:794px;min-height:850px;margin:auto;padding:54px 58px;box-shadow:0 3px 20px #8794a340;outline:none;line-height:1.5;overflow-wrap:anywhere}.paper:focus{box-shadow:0 3px 20px #8794a340,0 0 0 2px #9ac0ff}.paper img{max-width:100%;height:auto}.paper table{border-collapse:collapse;width:100%;margin:12px 0}.paper td{border:1px solid #777;min-width:50px;padding:8px}.paper .selected-image{outline:3px solid #185abd;outline-offset:3px}.shape{display:inline-block;border:2px solid #2463a8;background:#e6f1ff;border-radius:8px;padding:12px;min-width:90px;text-align:center;margin:6px;vertical-align:middle}.shape.ellipse{border-radius:100px}.shape.diamond{border-radius:4px;background:#fff1d6}.arrow{display:inline-block;font-size:25px;color:#185abd;padding:4px}.status{position:fixed;bottom:0;background:#f8fafc;border-top:1px solid #cbd5e1;width:100%;padding:9px 14px;font-size:12px;color:#455;display:flex;justify-content:space-between;gap:10px}.dialog{position:fixed;inset:0;background:#0006;display:none;align-items:center;justify-content:center;padding:18px;z-index:3}.dialog.open{display:flex}.panel{background:white;border-radius:12px;padding:20px;width:min(420px,100%);box-shadow:0 10px 40px #0003}.panel input,.panel select{width:100%;padding:10px;margin:7px 0 14px;border:1px solid #aaa;border-radius:6px}.actions{display:flex;gap:8px;justify-content:flex-end}.notice{background:#eaf2ff;padding:9px 14px;font-size:13px}.image-tools{background:#fff5d6}.image-tools[hidden]{display:none}@media(max-width:600px){.paper{min-height:620px;padding:26px 20px;font-size:15px}.workspace{padding:12px 7px 65px}.top{flex-wrap:wrap}.top input{width:170px}.tool{padding:10px 12px}.ribbon{min-height:65px}.notice{font-size:12px}}
-</style></head><body><header class="top"><strong>▣ Word <small>• навчальний симулятор</small></strong><input id="filename" value="Мій документ" aria-label="Назва документа"><button class="tool" onclick="saveHtml()">💾 Зберегти</button></header><nav class="tabs"><button class="tab active" data-tab="home">Основне</button><button class="tab" data-tab="insert">Вставлення</button><button class="tab" data-tab="layout">Макет</button></nav><div id="home" class="ribbon"><select class="tool" id="font" aria-label="Шрифт"><option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="Times New Roman">Times New Roman</option><option value="Verdana">Verdana</option></select><select class="tool" id="fontSize" aria-label="Розмір шрифту"><option>12</option><option selected>14</option><option>16</option><option>18</option><option>20</option><option>24</option><option>28</option><option>36</option></select><button class="tool" data-cmd="bold"><b>Ж</b></button><button class="tool" data-cmd="italic"><i>К</i></button><button class="tool" data-cmd="underline"><u>П</u></button><label class="tool">Колір <input type="color" id="color" value="#222222" style="width:30px;height:23px;vertical-align:middle"></label><span class="separator"></span><button class="tool" data-cmd="justifyLeft">☰ Ліворуч</button><button class="tool" data-cmd="justifyCenter">☰ Центр</button><button class="tool" data-cmd="justifyRight">☰ Праворуч</button><button class="tool" data-cmd="insertUnorderedList">• Список</button><button class="tool" data-cmd="insertOrderedList">1. Список</button><button class="tool" data-cmd="undo">↶</button><button class="tool" data-cmd="redo">↷</button></div><div id="insert" class="ribbon" hidden><button class="tool" id="addImage">🖼 Зображення з телефону</button><button class="tool" id="addTable">▦ Таблиця</button><button class="tool" id="addRect">▭ Прямокутник</button><button class="tool" id="addEllipse">◯ Овал</button><button class="tool" id="addDiamond">◇ Ромб</button><button class="tool" id="addArrow">➜ Стрілка</button></div><div id="layout" class="ribbon" hidden><button class="tool" id="portrait">▯ Книжкова</button><button class="tool" id="landscape">▭ Альбомна</button><button class="tool" id="clearDoc">🗑 Очистити</button><button class="tool" id="loadDoc">📂 Відкрити файл</button><button class="tool" id="print">🖨 Друк / PDF</button></div><div class="ribbon image-tools" id="imageTools" hidden><strong>Зображення:</strong><button class="tool" id="smaller">− Менше</button><button class="tool" id="bigger">＋ Більше</button><button class="tool" id="imgLeft">⬅ Ліворуч</button><button class="tool" id="imgCenter">↔ Центр</button><button class="tool" id="imgRight">➡ Праворуч</button><button class="tool" id="imgInline">У тексті</button><button class="tool" id="imgWrap">Обтікання</button><button class="tool" id="removeImage">✕ Видалити</button></div><div class="notice">Порада: торкніться аркуша, щоб писати. Торкніться зображення, щоб змінити його розмір чи розташування. Файл автоматично зберігається на цьому пристрої.</div><main class="workspace"><article id="editor" class="paper" contenteditable="true" spellcheck="true"><h1>Мій перший документ</h1><p>Торкнися цього тексту та почни редагувати. Додай зображення через вкладку «Вставлення».</p></article></main><footer class="status"><span id="counter">Слів: 0</span><span>6-В • навчальний редактор</span></footer><input type="file" id="imageFile" accept="image/*" hidden><input type="file" id="openFile" accept=".html,.htm,.txt" hidden><div class="dialog" id="dialog"><div class="panel"><h3 id="dialogTitle"></h3><div id="dialogBody"></div><div class="actions"><button class="tool" id="cancel">Скасувати</button><button class="tool" id="confirm">Додати</button></div></div></div><script>
-const ed=document.getElementById('editor'),$=id=>document.getElementById(id);let selected=null,range=null,confirmFn=null;const key='word6v-document-v1';try{let saved=JSON.parse(localStorage.getItem(key)||'null');if(saved){ed.innerHTML=saved.html;$('filename').value=saved.name||'Мій документ'}}catch(e){}function persist(){try{localStorage.setItem(key,JSON.stringify({html:ed.innerHTML,name:$('filename').value}))}catch(e){}updateCount()}function updateCount(){let t=ed.innerText.trim();$('counter').textContent='Слів: '+(t?t.split(/\s+/).length:0)}updateCount();ed.addEventListener('input',persist);$('filename').addEventListener('input',persist);document.addEventListener('selectionchange',()=>{let s=window.getSelection();if(s&&s.rangeCount&&ed.contains(s.anchorNode))range=s.getRangeAt(0).cloneRange()});function restore(){ed.focus();if(range){let s=window.getSelection();s.removeAllRanges();try{s.addRange(range)}catch(e){}}}function cmd(c,v=null){restore();document.execCommand(c,false,v);persist()}document.querySelectorAll('[data-cmd]').forEach(b=>b.addEventListener('click',()=>cmd(b.dataset.cmd)));$('font').onchange=e=>cmd('fontName',e.target.value);$('fontSize').onchange=e=>{const map={'12':2,'14':3,'16':3,'18':4,'20':4,'24':5,'28':5,'36':6};cmd('fontSize',map[e.target.value])};$('color').oninput=e=>cmd('foreColor',e.target.value);document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t===b));document.querySelectorAll('.ribbon:not(.image-tools)').forEach(r=>r.hidden=r.id!==b.dataset.tab)});function insert(html){restore();document.execCommand('insertHTML',false,html);persist()}function showDialog(title,body,fn){$('dialogTitle').textContent=title;$('dialogBody').innerHTML=body;$('dialog').classList.add('open');confirmFn=fn}$('cancel').onclick=()=>$('dialog').classList.remove('open');$('confirm').onclick=()=>{if(confirmFn)confirmFn();$('dialog').classList.remove('open')};$('addImage').onclick=()=>$('imageFile').click();$('imageFile').onchange=e=>{let f=e.target.files[0];if(!f)return;if(f.size>5e6){alert('Оберіть зображення до 5 МБ');return}let reader=new FileReader();reader.onload=()=>insert('<img src="'+reader.result+'" alt="Зображення" style="width:220px;max-width:100%;display:inline-block">');reader.readAsDataURL(f);e.target.value=''};$('addTable').onclick=()=>showDialog('Вставити таблицю','<label>Рядки <input id="rows" type="number" min="1" max="10" value="3"></label><label>Стовпці <input id="cols" type="number" min="1" max="6" value="3"></label>',()=>{let r=Math.min(10,Math.max(1,+$('rows').value||3)),c=Math.min(6,Math.max(1,+$('cols').value||3));insert('<table><tbody>'+Array.from({length:r},()=>'<tr>'+Array.from({length:c},()=>'<td> </td>').join('')+'</tr>').join('')+'</tbody></table><p></p>')});function shape(type){let label=type==='diamond'?'Умова':type==='ellipse'?'Початок':'Дія';insert('<span class="shape '+type+'" contenteditable="true">'+label+'</span>&nbsp;')}['Rect','Ellipse','Diamond'].forEach(t=>$("add"+t).onclick=()=>shape(t.toLowerCase()==='rect'?'rect':t.toLowerCase()));$('addArrow').onclick=()=>insert('<span class="arrow" contenteditable="false">➜</span>&nbsp;');ed.addEventListener('click',e=>{if(selected)selected.classList.remove('selected-image');selected=e.target.tagName==='IMG'?e.target:null;if(selected)selected.classList.add('selected-image');$('imageTools').hidden=!selected});function editImg(fn){if(!selected)return;fn(selected);persist()}$('smaller').onclick=()=>editImg(i=>i.style.width=Math.max(50,(i.getBoundingClientRect().width||220)*.8)+'px');$('bigger').onclick=()=>editImg(i=>i.style.width=Math.min(ed.clientWidth-40,(i.getBoundingClientRect().width||220)*1.2)+'px');$('imgLeft').onclick=()=>editImg(i=>{i.style.display='block';i.style.margin='8px auto 8px 0';i.style.float='none'});$('imgCenter').onclick=()=>editImg(i=>{i.style.display='block';i.style.margin='8px auto';i.style.float='none'});$('imgRight').onclick=()=>editImg(i=>{i.style.display='block';i.style.margin='8px 0 8px auto';i.style.float='none'});$('imgInline').onclick=()=>editImg(i=>{i.style.float='none';i.style.display='inline-block';i.style.margin='0 4px'});$('imgWrap').onclick=()=>editImg(i=>{i.style.float='right';i.style.display='inline';i.style.margin='4px 0 12px 14px'});$('removeImage').onclick=()=>editImg(i=>{i.remove();selected=null;$('imageTools').hidden=true});$('portrait').onclick=()=>{ed.style.maxWidth='794px';ed.style.minHeight='850px'};$('landscape').onclick=()=>{ed.style.maxWidth='1050px';ed.style.minHeight='600px'};$('clearDoc').onclick=()=>{if(confirm('Очистити документ?')){ed.innerHTML='<p><br></p>';persist()}};function saveHtml(){let name=($('filename').value||'Документ').replace(/[\\/:*?"<>|]/g,'_');let css='body{font:16px Arial;line-height:1.5;margin:40px auto;max-width:800px;padding:20px}img{max-width:100%}table{border-collapse:collapse;width:100%}td{border:1px solid #777;padding:8px}.shape{display:inline-block;border:2px solid #2463a8;background:#e6f1ff;padding:12px;margin:6px;border-radius:8px}';let content='<!doctype html><html lang="uk"><meta charset="utf-8"><title>'+name+'</title><style>'+css+'</style><body>'+ed.innerHTML+'</body></html>';let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type:'text/html'}));a.download=name+'.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}$('loadDoc').onclick=()=>$('openFile').click();$('openFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;let t=await f.text();if(f.name.endsWith('.txt'))ed.textContent=t;else{let doc=new DOMParser().parseFromString(t,'text/html');doc.querySelectorAll('script,iframe,object,embed,link,style').forEach(n=>n.remove());doc.querySelectorAll('*').forEach(n=>{[...n.attributes].forEach(a=>{if(a.name.startsWith('on')||/javascript:/i.test(a.value))n.removeAttribute(a.name)})});ed.innerHTML=doc.body.innerHTML}persist();e.target.value=''};$('print').onclick=()=>window.print();</script><style>@media print{.top,.tabs,.ribbon,.notice,.status{display:none!important}.workspace{padding:0}.paper{box-shadow:none;max-width:none;min-height:0;padding:0}body{background:white}}</style></body></html>
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10151d">
+<title>Зошит зображень і схем · 6 клас</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<main class="shell">
+ <header class="masthead"><div><div class="eyebrow">Інформатика · 6 клас</div><h1>Зошит зображень і схем</h1></div><div class="topic">Зображення та схеми в текстовому документі</div></header>
+ <nav class="tabs" role="tablist" aria-label="Розділи зошита">
+   <button class="tab" role="tab" data-tab="editor" aria-selected="true" aria-controls="editor-page">Редактор</button>
+   <button class="tab" role="tab" data-tab="tasks" aria-selected="false" aria-controls="tasks-page">Завдання</button>
+   <button class="tab" role="tab" data-tab="guide" aria-selected="false" aria-controls="guide-page">Довідка</button>
+ </nav>
+ <section id="editor-page" class="page" role="tabpanel" aria-label="Редактор">
+   <div class="panel editor-head">
+     <label>НАЗВА ДОКУМЕНТА <input id="docTitle" class="name-input" value="Мій документ" autocomplete="off"></label>
+     <div class="action-row">
+       <button class="btn" id="newDoc" title="Очистити документ">＋ Новий</button>
+       <button class="btn soft" id="downloadDoc">↓ Зберегти файл</button>
+       <button class="btn primary" id="shareDoc">↗ Поділитися</button>
+     </div>
+   </div>
+   <div class="panel editor-tools">
+     <div class="toolbar-label">Текст та абзац</div>
+     <div class="toolbar">
+       <select class="select" id="blockType" aria-label="Тип тексту"><option value="p">Звичайний текст</option><option value="h1">Заголовок 1</option><option value="h2">Заголовок 2</option></select>
+       <select class="select" id="fontFamily" aria-label="Шрифт"><option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="Times New Roman">Times New Roman</option><option value="Verdana">Verdana</option></select>
+       <select class="select" id="textSize" aria-label="Розмір шрифту"><option value="2">12</option><option value="3" selected>14</option><option value="4">18</option><option value="5">24</option><option value="6">32</option></select>
+       <button class="btn icon" data-cmd="bold" title="Жирний" aria-label="Жирний"><b>Ж</b></button>
+       <button class="btn icon" data-cmd="italic" title="Курсив" aria-label="Курсив"><i>К</i></button>
+       <button class="btn icon" data-cmd="underline" title="Підкреслення" aria-label="Підкреслення"><u>П</u></button>
+       <label class="small muted" for="textColor">Колір</label><input id="textColor" class="color" type="color" value="#202a39" title="Колір тексту" aria-label="Колір тексту">
+       <span class="toolbar-divider"></span>
+       <button class="btn" data-cmd="justifyLeft" title="Вирівняти ліворуч">☰ Ліворуч</button>
+       <button class="btn" data-cmd="justifyCenter" title="Вирівняти по центру">☰ Центр</button>
+       <button class="btn" data-cmd="justifyRight" title="Вирівняти праворуч">☰ Праворуч</button>
+       <button class="btn" data-cmd="insertUnorderedList" title="Маркований список">• Список</button>
+       <button class="btn" data-cmd="insertOrderedList" title="Нумерований список">1. Список</button>
+       <button class="btn icon" data-cmd="undo" title="Скасувати" aria-label="Скасувати">↶</button>
+       <button class="btn icon" data-cmd="redo" title="Повторити" aria-label="Повторити">↷</button>
+     </div>
+     <div class="toolbar-label" style="margin-top:16px">Вставлення об’єктів</div>
+     <div class="toolbar">
+       <button class="btn primary" id="pickImage">▧ Додати зображення</button>
+       <button class="btn soft" id="insertFlow">◇ Додати схему</button>
+       <button class="btn" id="addTable">▦ Таблиця</button>
+       <button class="btn" id="printDoc">⎙ Друк / PDF</button>
+       <button class="btn" data-guide="guide-images">? Як вставити зображення</button>
+       <button class="btn" data-guide="guide-flow">? Як побудувати схему</button>
+     </div>
+   </div>
+   <div class="panel" id="imageOptions" hidden>
+     <h3>▧ Робота із зображенням</h3>
+     <p class="small muted">Спочатку торкнись зображення на аркуші. Тепер можеш змінювати його властивості.</p>
+     <div class="subtools">
+       <label>Розмір зображення
+         <select class="select" id="imageWidth"><option value="25">Мале · 25%</option><option value="40">40%</option><option value="50" selected>Середнє · 50%</option><option value="75">75%</option><option value="100">На всю ширину · 100%</option></select>
+       </label>
+       <button class="btn" data-img-align="inline">У рядку</button>
+       <button class="btn" data-img-align="left">Ліворуч</button>
+       <button class="btn" data-img-align="center">По центру</button>
+       <button class="btn" data-img-align="right">Праворуч</button>
+       <button class="btn" data-img-align="wrapleft">Обтікання зліва</button>
+       <button class="btn" data-img-align="wrapright">Обтікання справа</button>
+       <button class="btn danger" id="deleteImage">✕ Видалити</button>
+     </div>
+   </div>
+   <div class="panel" id="flowOptions" hidden>
+     <h3>◇ Робота зі схемою</h3>
+     <p class="small muted">Торкнися фігури на аркуші. Введи новий текст або додай наступну фігуру.</p>
+     <div class="flow-control">
+       <label>Напис усередині фігури<input id="nodeLabel" maxlength="80" placeholder="Короткий напис"></label>
+       <button class="btn primary" id="renameNode">✓ Змінити напис</button>
+       <button class="btn" data-add-node="rect">＋ Прямокутник</button>
+       <button class="btn" data-add-node="oval">＋ Овал</button>
+       <button class="btn" data-add-node="diamond">＋ Ромб</button>
+       <button class="btn" id="moveNodeUp">↑ Вище</button>
+       <button class="btn" id="moveNodeDown">↓ Нижче</button>
+       <button class="btn danger" id="removeNode">✕ Фігуру</button>
+       <button class="btn danger" id="deleteFlow">🗑 Схему</button>
+     </div>
+     <p class="small muted">Стрілки між фігурами з’являються автоматично. Цей навчальний редактор створює послідовні схеми.</p>
+   </div>
+   <div class="notice">Працюєш індивідуально. Натисни на білий аркуш, щоб вводити текст; скористайся вкладкою «Завдання», щоб обрати місію. Зміни автоматично зберігаються в браузері цього телефону.</div>
+   <div id="currentTask" class="task-current" aria-live="polite"></div>
+   <div class="editor-zone"><div class="sheet"><article id="document" class="document" contenteditable="true" spellcheck="true"><h1>Мій документ</h1><p>Тут я створюватиму свій текст, додаватиму зображення та схеми.</p></article></div></div>
+   <div class="edit-status"><span id="wordCount">Слів: 0</span><span id="saveState">Автозбереження увімкнено</span></div>
+   <input type="file" id="imageInput" class="hidden-input" accept="image/*" aria-label="Оберіть зображення">
+ </section>
+ <section id="tasks-page" class="page" role="tabpanel" aria-label="Завдання" hidden>
+   <div class="panel">
+     <h2>Працюємо самостійно</h2>
+     <p>Кожен створює <b>власний документ</b> на своєму телефоні. Обирай завдання, виконуй його в редакторі, а після перевірки результату відмічай виконане. Можна користуватися вкладкою «Довідка».</p>
+     <p class="progress" id="progress">Виконано місій: 0 із 6</p>
+   </div>
+   <h2 class="section-label">Урок 19 · Зображення в текстовому документі</h2>
+   <div class="task-grid">
+     <article class="task-card"><span class="number">МІСІЯ 1 · ОСНОВА</span><h3>Місце моєї мрії</h3>
+       <p>Напиши заголовок «Місце, де я хочу побувати» і 3–4 речення про нього. Зроби заголовок помітним: зміни розмір та вирівняй по центру.</p>
+       <p class="criteria">Перевір: є заголовок, зв’язний текст і щонайменше три речення.</p>
+       <div class="action-row"><button class="btn primary" data-start="1. Місце моєї мрії">Відкрити редактор</button><label class="pill"><input type="checkbox" data-done="1"> Виконано</label></div>
+     </article>
+     <article class="task-card"><span class="number">МІСІЯ 2 · ЗОБРАЖЕННЯ</span><h3>Додай ілюстрацію</h3>
+       <p>Додай до свого тексту фото або малюнок місця. Зміни його розмір спочатку на 75%, потім на 40%. Розмісти зображення по центру.</p>
+       <p class="criteria">Перевір: зображення видно, воно не виходить за межі аркуша.</p>
+       <div class="action-row"><button class="btn primary" data-start="2. Додай ілюстрацію">Відкрити редактор</button><label class="pill"><input type="checkbox" data-done="2"> Виконано</label></div>
+     </article>
+     <article class="task-card"><span class="number">МІСІЯ 3 · ДОСЛІД</span><h3>Як текст обтікає фото?</h3>
+       <p>Додай ще два речення. Спробуй «У рядку», «Обтікання справа» та «Обтікання зліва». Порівняй, де текст розташований найзручніше, та залиш кращий варіант.</p>
+       <p class="criteria">Перевір: текст читається, фото не затуляє речення. Збережи документ на телефон.</p>
+       <div class="action-row"><button class="btn primary" data-start="3. Обтікання текстом">Відкрити редактор</button><label class="pill"><input type="checkbox" data-done="3"> Виконано</label></div>
+     </article>
+   </div>
+   <h2 class="section-label">Урок 20 · Схеми в текстовому документі</h2>
+   <div class="task-grid">
+     <article class="task-card"><span class="number">МІСІЯ 4 · СХЕМА</span><h3>Мій ранок перед школою</h3>
+       <p>Натисни «Додати схему». Заміни написи на «Початок» і «Перевіряю розклад». Додай ще дві дії: «Збираю рюкзак» та «Йду до школи».</p>
+       <p class="criteria">Перевір: схема має щонайменше чотири фігури, з’єднані стрілками.</p>
+       <div class="action-row"><button class="btn primary" data-start="4. Мій ранок перед школою">Відкрити редактор</button><label class="pill"><input type="checkbox" data-done="4"> Виконано</label></div>
+     </article>
+     <article class="task-card"><span class="number">МІСІЯ 5 · ФІГУРИ</span><h3>Упізнай значення</h3>
+       <p>Додай до схеми овал із написом «Кінець» та ромб із написом «Усе зібрано?». Постав їх у потрібному порядку кнопками «↑ Вище» і «↓ Нижче».</p>
+       <p class="criteria">Перевір: овал позначає початок або кінець, прямокутник — дію, ромб — умову.</p>
+       <div class="action-row"><button class="btn primary" data-start="5. Значення фігур">Відкрити редактор</button><label class="pill"><input type="checkbox" data-done="5"> Виконано</label></div>
+     </article>
+     <article class="task-card"><span class="number">МІСІЯ 6 · ФІНАЛ</span><h3>Мій ілюстрований документ</h3>
+       <p>Додай перед схемою короткий підзаголовок «Як я організовую свій день». Перевір усі написи, вирівнювання та розмір фото. Дай документу власну назву й завантаж файл.</p>
+       <p class="criteria">Готовий результат: текст + зображення + схема з підписами.</p>
+       <div class="action-row"><button class="btn primary" data-start="6. Фінальний документ">Відкрити редактор</button><label class="pill"><input type="checkbox" data-done="6"> Виконано</label></div>
+     </article>
+   </div>
+   <div class="panel" style="margin-top:17px"><h3>Коли завершиш роботу</h3><p>Відкрий вкладку «Редактор», натисни <b>«↓ Зберегти файл»</b>, щоб завантажити документ, або <b>«↗ Поділитися»</b>, щоб спробувати надіслати його через доступні на телефоні застосунки. Не видаляй документ, доки вчитель не перевірить результат.</p></div>
+ </section>
+ <section id="guide-page" class="page" role="tabpanel" aria-label="Довідка" hidden>
+   <div class="panel"><h2>Підказки для роботи в редакторі</h2><p>Не потрібно запам’ятовувати всі кнопки. Користуйся короткими інструкціями, коли виконуєш практичну роботу.</p></div>
+   <div class="guide-grid">
+     <article class="guide-item" id="guide-text"><h3>✎ Як змінити текст?</h3><ol class="steps">
+       <li>Перейди у вкладку «Редактор» та торкнись білого аркуша.</li>
+       <li>Виділи потрібні слова, якщо хочеш змінити тільки їх.</li>
+       <li>Використай <b>Ж</b> — жирний, <i>К</i> — курсив, <u>П</u> — підкреслення.</li>
+       <li>Обирай шрифт, розмір, колір або вирівнювання тексту.</li>
+       </ol><p class="small muted">«Заголовок 1» змінює вигляд усього вибраного абзацу. Для окремого слова краще користуйся жирним або курсивом.</p></article>
+     <article class="guide-item" id="guide-images"><h3>▧ Як вставити зображення?</h3><ol class="steps">
+       <li>Постав курсор у потрібне місце в тексті.</li>
+       <li>Натисни «Додати зображення».</li>
+       <li>Вибери фотографію або малюнок на телефоні.</li>
+       <li>Торкнися вставленого зображення, щоб побачити панель інструментів.</li>
+       <li>Зміни розмір або розташування; якщо потрібно — видали його.</li>
+       </ol><p class="small muted">Для навчальної роботи краще використовувати власні фото або зображення, які дозволено використовувати.</p></article>
+     <article class="guide-item" id="guide-wrap"><h3>↔ Як змінити обтікання?</h3>
+       <p><b>«У рядку»</b> — малюнок поводиться подібно до великого символу в тексті.</p>
+       <p><b>«Обтікання справа»</b> — малюнок біля правого краю, а текст може розташовуватися ліворуч від нього.</p>
+       <p><b>«Обтікання зліва»</b> — малюнок біля лівого краю, а текст — праворуч.</p>
+       <p><b>«По центру»</b> — зображення розміщується посередині окремого рядка.</p>
+       <p class="small muted">У цьому симуляторі обтікання спрощене. Вигляд може трохи відрізнятися від Microsoft Word.</p>
+     </article>
+     <article class="guide-item" id="guide-flow"><h3>◇ Як створити схему?</h3><ol class="steps">
+       <li>Постав курсор на новий рядок.</li>
+       <li>Натисни «Додати схему» — з’являться дві з’єднані фігури.</li>
+       <li>Натисни на фігуру й зміни напис у полі «Напис усередині фігури».</li>
+       <li>Додай прямокутник, овал або ромб: нова фігура стане після вибраної.</li>
+       <li>За потреби поміняй порядок стрілками «↑ Вище» і «↓ Нижче».</li>
+       </ol><p class="small muted">Стрілки вставляються автоматично. Схеми тут послідовні, без окремих гілок «так/ні».</p>
+     </article>
+     <article class="guide-item"><h3>▣ Що означають фігури?</h3>
+       <div class="figures"><div class="figure-note"><div class="figure-preview"><span class="flow-shape oval">Старт</span></div>Овал — початок або кінець</div><div class="figure-note"><div class="figure-preview"><span class="flow-shape rect">Дія</span></div>Прямокутник — дія</div><div class="figure-note"><div class="figure-preview"><span class="flow-shape diamond">?</span></div>Ромб — перевірка умови</div></div>
+       <p class="small muted">Стрілка показує, в якому порядку виконуються дії.</p>
+     </article>
+     <article class="guide-item"><h3>↓ Як зберегти роботу?</h3><ol class="steps">
+       <li>Назви документ у полі «Назва документа».</li>
+       <li>Під час роботи редактор автоматично зберігає зміни <b>на цьому телефоні у цьому браузері</b>.</li>
+       <li>Натисни «Зберегти файл» — отримаєш HTML-файл зі своїм текстом, фото та схемою.</li>
+       <li>Якщо є можливість, натисни «Поділитися» і вибери застосунок, через який передаєш файл учителю.</li>
+       </ol><p class="small muted">Автозбереження не переносить роботу на інший телефон. Очищення даних браузера може видалити незавантажений документ. Кнопка «Друк / PDF» залежить від можливостей браузера.</p>
+     </article>
+   </div>
+   <p class="guide-footer">Навчальний симулятор допомагає освоїти основні інструменти текстового редактора. Це не повна версія Microsoft Word.</p>
+ </section>
+ <footer class="footer">Інформатика · 6-В клас · Уроки 19–20 · Індивідуальна практична робота</footer>
+</main>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<script src="./app.js" defer></script>
+</body></html>
