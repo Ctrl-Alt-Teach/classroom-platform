@@ -19,3 +19,72 @@
 .mail-actions .btn{min-height:48px}
 @media(max-width:510px){.mail-panel{padding:17px}.mail-actions{display:grid;grid-template-columns:1fr 1fr}.send-button{font-size:17px}}
 @media print{.send-strip,.mail-dialog{display:none!important}}
+
+
+/* КОМПАКТНИЙ МОБІЛЬНИЙ РЕЖИМ — більше місця для документа.
+   Панелі прокручуються вбік, а не розростаються вниз. */
+@media (max-width: 720px) {
+  .shell {width:calc(100% - 16px);padding:9px 0 35px}
+  .masthead {margin:0 1px 7px}
+  .eyebrow {font-size:10px;letter-spacing:.1em}
+  .masthead h1 {font-size:clamp(23px,5.7vw,30px);margin:2px 0 0;line-height:1.1}
+  .topic {display:none}
+  .tabs {margin-bottom:7px;padding:3px;gap:3px;border-radius:11px}
+  .tab {min-height:38px;font-size:13px;padding:5px 3px;border-radius:8px}
+  .panel {padding:9px 10px;margin-bottom:8px;border-radius:12px}
+  .editor-head {gap:6px}
+  .editor-head label {font-size:10px;min-width:120px;gap:2px}
+  .name-input {min-height:36px;padding:6px 9px;font-size:14px}
+  .editor-head .action-row {flex-wrap:nowrap;gap:5px}
+  .editor-head .btn {font-size:12px;min-height:36px;white-space:nowrap;padding:7px 9px;border-radius:8px}
+  .btn {font-size:13px;min-height:39px;padding:7px 9px;border-radius:9px}
+  .btn.icon {min-width:39px;padding:7px}
+  .editor-tools {padding:7px 8px}
+  .toolbar-label {font-size:10px;letter-spacing:.06em;margin:0 0 3px}
+  .toolbar-label::after {content:"  ·  гортай інструменти →";color:#cad9fa;text-transform:none;letter-spacing:0;font-weight:500}
+  .editor-tools .toolbar {
+    flex-wrap:nowrap;gap:5px;overflow-x:auto;overflow-y:hidden;
+    padding:3px 2px 6px;max-width:100%;scrollbar-width:thin;
+    overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch;
+    scroll-snap-type:x proximity
+  }
+  .editor-tools .toolbar > * {flex:0 0 auto;scroll-snap-align:start}
+  .editor-tools .toolbar .btn {min-height:38px;font-size:12px;padding:6px 9px;white-space:nowrap}
+  .editor-tools .toolbar .btn.icon {min-width:38px;padding:6px}
+  .editor-tools .toolbar .select {min-height:38px;padding:5px 7px;font-size:12px;max-width:128px}
+  .editor-tools .toolbar .color {width:39px;min-height:38px;padding:4px}
+  .toolbar-divider {height:22px}
+  .toolbar-label[style] {margin-top:6px!important}
+  .send-strip {margin:0 0 7px;gap:3px}
+  .send-button {min-height:40px;font-size:14px;padding:7px 12px;border-radius:10px}
+  .send-caption {font-size:10px;line-height:1.3}
+  .notice {font-size:11px;line-height:1.35;padding:7px 8px;margin:6px 0}
+  .editor-zone {padding:5px;border-radius:10px}
+  .sheet {padding:17px 13px;min-height:310px}
+  .document {min-height:280px}
+  .document h1 {font-size:24px}
+  .edit-status {font-size:11px;margin-top:5px}
+  #currentTask {font-size:12px;margin:4px 0}
+  #imageOptions .subtools,#flowOptions .flow-control {gap:5px;padding:7px}
+  #imageOptions .subtools .btn,#flowOptions .flow-control .btn {min-height:37px;font-size:12px;padding:6px 8px}
+  .panel h2 {font-size:20px;margin-bottom:8px}
+  .panel h3 {font-size:17px;margin-bottom:7px}
+  .task-card {padding:12px;gap:7px;border-radius:12px}
+  .task-card h3 {font-size:18px}
+  .task-card p {font-size:14px}
+  .task-card .criteria {font-size:12px}
+  .task-card .btn {min-height:38px}
+  .section-label {margin:14px 0 8px;font-size:15px}
+  .guide-item {padding:12px;border-radius:12px}
+  .guide-item h3 {font-size:18px}
+}
+@media (max-width: 420px) {
+  .editor-head .action-row {width:100%;display:grid;grid-template-columns:.9fr 1.3fr 1.2fr}
+  .editor-head .action-row .btn {min-width:0;padding:6px 4px;font-size:11px}
+  .editor-head .btn {flex:unset}
+  .mail-panel {padding:13px}
+  .mail-panel .btn {min-height:39px}
+}
+@media print {
+  .toolbar-label::after {content:none}
+}
