@@ -24,6 +24,10 @@
        <button class="btn primary" id="shareDoc">↗ Поділитися</button>
      </div>
    </div>
+   <div class="send-strip">
+     <button id="sendToTeacher" class="btn primary send-button" type="button">✉ Надіслати вчителю</button>
+     <div class="send-caption">Робота піде на пошту <strong>work.inform@chern12.ukr.education</strong> як прикріплений HTML-файл.</div>
+   </div>
    <div class="panel editor-tools">
      <div class="toolbar-label">Текст та абзац</div>
      <div class="toolbar">
@@ -174,7 +178,7 @@
        <li>Назви документ у полі «Назва документа».</li>
        <li>Під час роботи редактор автоматично зберігає зміни <b>на цьому телефоні у цьому браузері</b>.</li>
        <li>Натисни «Зберегти файл» — отримаєш HTML-файл зі своїм текстом, фото та схемою.</li>
-       <li>Якщо є можливість, натисни «Поділитися» і вибери застосунок, через який передаєш файл учителю.</li>
+       <li>Щоб передати роботу без поштового застосунку, натисни «Надіслати вчителю», введи ім’я та прізвище й підтвердь відправлення. Перевір повідомлення від сервісу надсилання у вкладці, що відкриється.</li>
        </ol><p class="small muted">Автозбереження не переносить роботу на інший телефон. Очищення даних браузера може видалити незавантажений документ. Кнопка «Друк / PDF» залежить від можливостей браузера.</p>
      </article>
    </div>
@@ -183,5 +187,28 @@
  <footer class="footer">Інформатика · 6-В клас · Уроки 19–20 · Індивідуальна практична робота</footer>
 </main>
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<!-- Передача файлу виконується за дією учня через зовнішній сервіс FormSubmit. -->
+<div id="sendDialog" class="mail-dialog" role="dialog" aria-modal="true" aria-labelledby="sendDialogTitle" hidden>
+  <div class="mail-panel">
+    <div class="mail-title-row"><h2 id="sendDialogTitle">Надіслати роботу вчителю</h2><button class="btn icon" id="closeSendDialog" type="button" aria-label="Закрити">✕</button></div>
+    <form id="sendForm" method="POST" action="https://formsubmit.co/work.inform@chern12.ukr.education" target="_blank" enctype="multipart/form-data">
+      <p class="muted small">Твоя робота буде надіслана на <strong>work.inform@chern12.ukr.education</strong></p>
+      <label for="studentName" class="mail-label">Ім’я та прізвище учня</label>
+      <input id="studentName" name="name" class="name-input mail-input" type="text" required autocomplete="name" maxlength="100" placeholder="Наприклад: Олена Петренко">
+      <label for="studentClass" class="mail-label">Клас</label>
+      <input id="studentClass" name="class" class="name-input mail-input" value="6-В" maxlength="20" required>
+      <input type="hidden" name="_subject" id="mailSubject">
+      <input type="hidden" name="document_title" id="mailDocTitle">
+      <input type="hidden" name="completed_tasks" id="mailProgress">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" class="hidden-input" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <input type="file" name="attachment" id="mailAttachment" class="hidden-input" tabindex="-1" aria-hidden="true">
+      <p id="sendFileSize" class="small muted"></p>
+      <p class="mail-privacy">Для надсилання ім’я та документ передаються через зовнішній сервіс <a href="https://formsubmit.co/" target="_blank" rel="noopener noreferrer">FormSubmit</a>. Першого разу вчитель має підтвердити свою пошту в листі активації. Повідомлення про успіх перевіряй у новій вкладці.</p>
+      <div class="mail-actions"><button id="cancelSendDialog" class="btn" type="button">Скасувати</button><button id="confirmSend" class="btn primary" type="submit">✉ Надіслати роботу</button></div>
+    </form>
+  </div>
+</div>
 <script src="./app.js" defer></script>
 </body></html>
