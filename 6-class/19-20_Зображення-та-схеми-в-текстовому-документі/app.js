@@ -3,17 +3,73 @@
 "use strict";
 const $=id=>document.getElementById(id),ed=$("document"),key="word6v-notebook-v2";
 let lastRange=null,img=null,node=null,flow=null,task="";
+const validClasses=["6-А","6-Б","6-В"];
+let selectedClass="6-В";
+const initialDocument=ed.innerHTML;
+const draftsByClass=Object.create(null);
+const checksByClass={"6-А":[],"6-Б":[],"6-В":[]};
 function tip(s){let t=$("toast");t.textContent=s;t.hidden=false;clearTimeout(t.timer);t.timer=setTimeout(()=>t.hidden=true,3900)}
 function go(tab){document.querySelectorAll("[data-tab]").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.tab===tab)));document.querySelectorAll(".page").forEach(p=>p.hidden=p.id!==tab+"-page");window.scrollTo({top:0,behavior:"smooth"})}
 document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>go(b.dataset.tab));
 function serialize(){let copy=ed.cloneNode(true);copy.querySelectorAll(".picked,.active").forEach(x=>x.classList.remove("picked","active"));return copy.innerHTML}
-function save(){try{localStorage.setItem(key,JSON.stringify({html:serialize(),name:$("docTitle").value,task:task,checks:[...document.querySelectorAll("[data-done]:checked")].map(x=>x.dataset.done)}));$("saveState").textContent="✓ Автозбережено на цьому пристрої"}catch(e){$("saveState").textContent="⚠ Пам’ять браузера заповнена — завантаж документ"}counter()}
+function activeChecks(){return [...document.querySelectorAll(selectedClass==="6-В"?"#tasks-standard [data-done]":"#tasks-easy [data-done]")]}
+function captureClassWork(){
+  draftsByClass[selectedClass]={html:serialize(),name:$("docTitle").value,task};
+  checksByClass[selectedClass]=activeChecks().filter(c=>c.checked).map(c=>c.dataset.done);
+}
+function save(){
+  captureClassWork();
+  try{
+    localStorage.setItem(key,JSON.stringify({selectedClass,documents:draftsByClass,checksByClass}));
+    $("saveState").textContent="✓ Автозбережено на цьому пристрої";
+  }catch(e){$("saveState").textContent="⚠ Пам’ять браузера заповнена — завантаж документ"}
+  counter();
+}
 function counter(){let s=ed.innerText.trim();$("wordCount").textContent="Слів: "+(s?s.split(/\s+/).length:0)}
-function progress(){let a=[...document.querySelectorAll("[data-done]")];$("progress").textContent="Виконано місій: "+a.filter(x=>x.checked).length+" із "+a.length}
+function progress(){let a=activeChecks();$("progress").textContent="Виконано місій: "+a.filter(x=>x.checked).length+" із "+a.length}
 function activeTask(){$("currentTask").textContent=task?"Поточна місія: "+task:""}
-try{let x=JSON.parse(localStorage.getItem(key)||"null");if(x){ed.innerHTML=x.html||"";$("docTitle").value=x.name||"Мій документ";task=x.task||"";(x.checks||[]).forEach(v=>{let c=[...document.querySelectorAll("[data-done]")].find(x=>x.dataset.done===v);if(c)c.checked=true})}}catch(e){}
-ed.querySelectorAll(".picked,.active").forEach(x=>x.classList.remove("picked","active"));counter();progress();activeTask();
+function showClass(cls,initial=false){
+  if(!validClasses.includes(cls))return;
+  if(!initial)captureClassWork();
+  selectedClass=cls;
+  img=null;node=null;flow=null;lastRange=null;
+  $("imageOptions").hidden=true;$("flowOptions").hidden=true;
+  const draft=draftsByClass[cls]||{html:initialDocument,name:"Мій документ",task:""};
+  ed.innerHTML=draft.html||initialDocument;
+  $("docTitle").value=draft.name||"Мій документ";
+  task=draft.task||"";
+  const easy=cls!=="6-В";
+  $("tasks-standard").hidden=easy;
+  $("tasks-easy").hidden=!easy;
+  document.querySelectorAll("[data-class-choice]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.classChoice===cls)));
+  document.querySelectorAll("[data-done]").forEach(c=>c.checked=false);
+  activeChecks().forEach(c=>c.checked=(checksByClass[cls]||[]).includes(c.dataset.done));
+  $("classDescription").textContent=easy?cls+": три короткі місії на один урок (45 хвилин).":"6-В: шість місій на два уроки (19 і 20).";
+  $("studentClass").value=cls;
+  counter();progress();activeTask();
+  if(!initial)save();
+}
+try{
+  const x=JSON.parse(localStorage.getItem(key)||"null");
+  if(x){
+    if(x.documents&&typeof x.documents==="object"){
+      validClasses.forEach(cls=>{
+        if(x.documents[cls]&&typeof x.documents[cls]==="object")draftsByClass[cls]=x.documents[cls];
+      });
+    }else{
+      // Зберігаємо всі раніше створені роботи 6-В після оновлення сайту.
+      draftsByClass["6-В"]={html:x.html||initialDocument,name:x.name||"Мій документ",task:x.task||""};
+    }
+    if(x.checksByClass&&typeof x.checksByClass==="object"){
+      validClasses.forEach(cls=>checksByClass[cls]=Array.isArray(x.checksByClass[cls])?x.checksByClass[cls]:[]);
+    }else if(Array.isArray(x.checks))checksByClass["6-В"]=x.checks;
+    selectedClass=validClasses.includes(x.selectedClass)?x.selectedClass:"6-В";
+  }
+}catch(e){}
+showClass(selectedClass,true);
+ed.querySelectorAll(".picked,.active").forEach(x=>x.classList.remove("picked","active"));
 ed.addEventListener("input",save);$("docTitle").addEventListener("input",save);
+document.querySelectorAll("[data-class-choice]").forEach(b=>b.addEventListener("click",()=>showClass(b.dataset.classChoice)));
 document.querySelectorAll("[data-done]").forEach(c=>c.addEventListener("change",()=>{progress();save()}));
 document.querySelectorAll("[data-start]").forEach(b=>b.addEventListener("click",()=>{task=b.dataset.start;activeTask();save();go("editor");tip("Місію обрано. Створюй документ самостійно!")}));
 document.addEventListener("selectionchange",()=>{let s=window.getSelection();if(s&&s.rangeCount&&ed.contains(s.anchorNode)&&!s.anchorNode.parentElement?.closest(".flowchart"))lastRange=s.getRangeAt(0).cloneRange()});
@@ -56,6 +112,7 @@ const sendDialog=$("sendDialog"),sendForm=$("sendForm"),nameField=$("studentName
 try{nameField.value=localStorage.getItem("word6v-student-name")||""}catch(e){}
 function closeSend(){sendDialog.hidden=true;$("sendToTeacher").focus()}
 function openSend(){
+  studentClass.value=selectedClass;
   const f=file();
   $("sendFileSize").textContent="Вкладення: "+f.name+" · "+(f.size/1024).toFixed(0)+" КБ";
   if(f.size>9.5*1024*1024){tip("Файл завеликий (до 10 МБ). Видали або заміни важкі зображення.");return}
@@ -88,8 +145,8 @@ sendForm.addEventListener("submit",e=>{
     return;
   }
   const title=($("docTitle").value.trim()||"Мій документ").replace(/[\r\n<>]/g," ").slice(0,100);
-  const checked=[...document.querySelectorAll("[data-done]:checked")].map(x=>x.dataset.done).join(", ");
-  $("mailSubject").value="Інформатика 6-В · Уроки 19–20 · "+student;
+  const checked=activeChecks().filter(x=>x.checked).map(x=>x.dataset.done).join(", ");
+  $("mailSubject").value="Інформатика "+selectedClass+" · Зображення і схеми · "+student;
   $("mailDocTitle").value=title;
   $("mailProgress").value=checked||"Немає відміток";
   nameField.value=student;
