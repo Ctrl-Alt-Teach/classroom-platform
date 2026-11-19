@@ -87,6 +87,63 @@ textarea:focus-visible{outline:2px solid #56bca6;outline-offset:-2px}
 .report>div{background:#233955;border:1px solid #6e83a7;border-radius:15px;padding:19px}
 .report strong{font-size:26px;color:#ffe099}.report span{display:block;font-size:12px;color:#ccdcef}
 .bonusgold{border:1px solid #e3b94f;background:#4c3c22;border-radius:15px;padding:16px;color:#ffe9b2}
+.quest-stack{display:grid;gap:17px;margin-top:18px}
+.quest-panel{border:1px solid #425d81;border-radius:21px;overflow:hidden;background:linear-gradient(150deg,#162841,#111d31);box-shadow:0 12px 38px #0003}
+.quest-pad{padding:22px 24px}
+.section-head{display:flex;gap:12px;align-items:center;margin-bottom:13px}
+.section-number{display:grid;place-items:center;width:40px;height:40px;flex:0 0 40px;border-radius:12px;background:#3c4b75;border:1px solid #799cce;color:#fff4cf;font-weight:950}
+.section-eyebrow{font-size:11px;color:#a8bfdf;font-weight:850;letter-spacing:.1em}
+.section-head h3{margin:0;font-size:22px;letter-spacing:-.02em}
+.block-grid{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0}
+.block-button{border:1px solid #7d9bbb;background:#253e61;color:#f5faff;border-radius:11px;padding:11px 15px;text-align:left;display:grid;gap:4px;min-width:195px;max-width:100%;box-shadow:0 4px 12px #0003}
+.block-button:hover{background:#39567d;border-color:#e0ebff}
+.block-button code{color:#e0f3ff;font-size:14px;padding:0;background:none;white-space:pre-wrap;overflow-wrap:anywhere}
+.block-button small{color:#b7d4ed;font-size:11px;font-weight:750}
+.block-button[disabled]{opacity:.4}
+.editor[readonly],textarea[readonly]{cursor:default;opacity:1}
+.block-feedback{padding:12px 14px;background:#202f50;border:1px solid #718cc0;border-radius:11px;margin:13px 0;color:#eaf2ff}
+.block-feedback strong{color:#ffe2ab}
+.block-feedback p{margin:6px 0}
+.block-next{font-weight:800;color:#a3e9d5}
+.test-choice.active{background:#68562d;border-color:#ffdb91;color:#fff8d8}
+.test-choice.passed{border-color:#60cfad}
+.test-choice{background:#294365;border:1px solid #7395b5;border-radius:12px;padding:12px;color:#f0f7ff;font-weight:800;flex:1;min-width:120px}
+.test-chooser{display:flex;flex-wrap:wrap;gap:9px;margin:13px 0}
+.game-scene{margin-top:13px;border:1px solid #7297bd;border-radius:17px;background:linear-gradient(135deg,#1a3150,#17223e);overflow:hidden;scroll-margin-top:185px}
+.scene-hud{padding:13px 17px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;background:#0d1c2dcc;font-size:12px;font-weight:850;letter-spacing:.07em;color:#deeeff}
+.scene-live{color:#ffdb85}
+.scene-world{position:relative;min-height:245px;display:grid;place-items:center;align-content:center;gap:8px;text-align:center;background:radial-gradient(circle at 50% 35%,#365f83,#182845 64%,#111c30);overflow:hidden}
+.scene-world:before{content:"";position:absolute;inset:0;background:linear-gradient(transparent 94%,#7292ae12 96%) 0 0/100% 28px,linear-gradient(90deg,transparent 94%,#7292ae12 96%) 0 0/28px 100%;opacity:.7}
+.world-emoji{font-size:clamp(84px,10vw,122px);line-height:1.2;z-index:1;filter:drop-shadow(0 18px 24px #0009);animation:world-idle 2.8s ease-in-out infinite}
+.world-label{z-index:1;font-size:13px;color:#ffdea4;font-weight:900;letter-spacing:.12em}
+.world-number{z-index:1;color:white;font-weight:950;font-size:27px}
+@keyframes world-idle{50%{transform:translateY(-8px)}}
+@keyframes world-success{0%{transform:translateY(28px) scale(.7);opacity:.2}55%{transform:translateY(-14px) scale(1.16)}100%{transform:translateY(0) scale(1);opacity:1}}
+@keyframes world-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.game-scene[data-phase="positive"] .world-emoji,.game-scene[data-phase="normal"] .world-emoji{animation:world-success .85s both}
+.game-scene[data-phase="negative"] .world-emoji,.game-scene[data-phase="error"] .world-emoji{animation:world-shake .55s both}
+.game-scene[data-phase="negative"]{border-color:#d58092}
+/* Тематичне оформлення сцен: скарбниця, двері, станція, магазин */
+.game-scene[data-kind="0"] .scene-world{background:radial-gradient(ellipse at 50% 32%,#806330 0%,#35416b 53%,#15223a 100%)}
+.game-scene[data-kind="1"] .scene-world{background:radial-gradient(ellipse at 50% 30%,#396787 0%,#243a69 58%,#151e39 100%)}
+.game-scene[data-kind="2"] .scene-world{background:radial-gradient(ellipse at 50% 30%,#485f84 0%,#1b3854 55%,#16213c 100%)}
+.game-scene[data-kind="3"] .scene-world{background:radial-gradient(ellipse at 50% 30%,#795b4e 0%,#394069 52%,#1b203c 100%)}
+.game-scene[data-phase="positive"] .scene-world:after,
+.game-scene[data-phase="normal"] .scene-world:after{content:"✦ ✧ ✦";position:absolute;top:24px;left:15%;right:15%;z-index:0;color:#ffecad;font-size:26px;letter-spacing:2.3em;animation:world-success 1s both}
+.game-scene[data-phase="negative"] .scene-world:after{content:"●";position:absolute;top:18px;right:18px;color:#ff929f;font-size:25px;filter:drop-shadow(0 0 14px #f35e82)}
+.game-scene[data-kind="2"][data-phase="negative"] .scene-world{background:radial-gradient(ellipse at 50% 32%,#374b7e 0%,#1c3159 55%,#121c35 100%)}
+.game-scene[data-kind="2"][data-phase="normal"] .scene-world{background:radial-gradient(ellipse at 50% 32%,#356c63 0%,#204651 55%,#111e32 100%)}
+
+.game-scene[data-phase="positive"]{border-color:#4dcdab}
+.scene-details{padding:16px 18px;background:#111f33}
+.scene-meter{height:10px;border-radius:99px;overflow:hidden;background:#374d69;margin:9px 0 13px}
+.scene-meter span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#4cc7a6,#ffe18b);transition:width .5s ease}
+.scene-output{display:grid;gap:7px;margin-top:10px}
+.scene-output div{padding:9px 11px;background:#1e3651;border:1px solid #6884a7;border-radius:9px;font-weight:750}
+.scene-output .positive{color:#b5ffdf;border-color:#55cfaa;background:#184339}
+.scene-output .negative{color:#ffd4dc;border-color:#e099a5;background:#492a38}
+.scene-output .normal{color:#c3e1ff;border-color:#86a8d3;background:#1c385a}
+.game-scene:focus{outline:0}
 .footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:#9fb6d3;font-size:12px;margin-top:18px}
 @media(max-width:850px){.workspace{grid-template-columns:1fr}.visual{min-height:215px}.student-bar{grid-template-columns:1fr}.field{min-width:0;max-width:none;flex:1 1 35%}.field.small{flex:1 1 19%;max-width:none}.stats{min-width:0}.stats-head{display:flex;justify-content:space-between;gap:10px}}
 @media(max-width:480px){.shell{padding:13px 11px 45px}.student-bar{padding:9px}.hero{padding:22px 19px}.pad{padding:19px}.levels{gap:5px}.pip{font-size:11px;padding:9px 3px}.testlist{grid-template-columns:1fr}.student-bar{border-radius:13px}.field input,.field select{height:35px;font-size:13px}textarea{font-size:14px}.brand-title{font-size:18px}.btn{flex:1 1 45%}}
@@ -171,7 +228,7 @@ const MISSIONS=[
   texts:["Меч куплено","Шлях відкрито","Недостатньо монет","Зароби ще монет"]}
 ];
 const $=id=>document.getElementById(id);
-const fresh=()=>({level:0,complete:[false,false,false,false],code:["","","",""],tests:[[],[],[],[]],attempts:[0,0,0,0],hints:[0,0,0,0],showHint:false,showSolution:false,
+const fresh=()=>({level:0,complete:[false,false,false,false],code:["","","",""],blocks:[[],[],[],[]],activeTests:[15,9,25,25],scene:null,failed:[0,0,0,0],tests:[[],[],[],[]],attempts:[0,0,0,0],hints:[0,0,0,0],showHint:false,showSolution:false,
  student:{first:"",surname:"",klass:"",group:""},sessionId:"",linkedSession:"",startedAt:0,locked:false,
  reports:{},pending:{},lastSent:0,notice:"",noticeKind:"",finished:false,bonusSkipped:false,latestOutput:""});
 function safe(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
@@ -180,7 +237,7 @@ function load(){
  var val=readJSON(KEY),base=fresh();
  if(val&&Number.isInteger(val.level)&&val.level>=0&&val.level<=4&&Array.isArray(val.complete)&&Array.isArray(val.code)&&Array.isArray(val.tests)){
   return Object.assign(base,val,{student:Object.assign(base.student,val.student||{}),complete:val.complete.slice(0,4),code:val.code.slice(0,4),
-    tests:val.tests.slice(0,4).map(x=>Array.isArray(x)?x:[]),attempts:Array.isArray(val.attempts)?val.attempts.slice(0,4):base.attempts,
+    tests:val.tests.slice(0,4).map(x=>Array.isArray(x)?x:[]),blocks:Array.isArray(val.blocks)?val.blocks.map(x=>Array.isArray(x)?x:[]):base.blocks,activeTests:Array.isArray(val.activeTests)?val.activeTests:base.activeTests,failed:Array.isArray(val.failed)?val.failed:base.failed,attempts:Array.isArray(val.attempts)?val.attempts.slice(0,4):base.attempts,
     hints:Array.isArray(val.hints)?val.hints.slice(0,4):base.hints,reports:val.reports||{},pending:val.pending||{}});
  }
  var one=readJSON(PART1_KEY);
@@ -228,8 +285,8 @@ function getProgress(){return state.complete.filter(Boolean).length;}
 function buildReport(stage){
  var count=Math.min(stage,4),levels=MISSIONS.slice(0,count).map((m,i)=>{
   return {level:i+1,missionId:i+1,title:m.title,completed:!!state.complete[i],
-  checks:state.tests[i].length,failed:state.attempts[i],hints:state.hints[i],
-  distinctDatasets:state.tests[i].length,testRuns:state.tests[i].length,invalidRuns:state.attempts[i],
+  checks:state.tests[i].length,failed:state.failed[i]||0,hints:state.hints[i],
+  distinctDatasets:state.tests[i].length,testRuns:state.tests[i].length,invalidRuns:state.failed[i]||0,
   selections:0,durationSeconds:0,usedInputs:state.tests[i].map(x=>[x])};
  });
  var runs=[];
@@ -333,27 +390,33 @@ function validateShape(blocks){
 function matches(a,b){return a.length===b.length&&a.every((v,i)=>v===b[i]);}
 function testValue(v){
  if(state.complete[state.level])return;
- var m=current(),editor=$("editor"),code=editor.value;
- if(!code.trim()){showNotice("Спочатку напиши код у редакторі.","bad");return;}
- state.code[state.level]=code;state.attempts[state.level]++;
+ var m=current(),i=state.level,code=state.code[i]||"";
+ state.attempts[i]++;
  try{
-  var blocks=compilePython(code);validateShape(blocks);
-  var output=execute(blocks,v),expected=m.expect(v);
+  if((state.blocks[i]||[]).length!==m.solution.split("\n").length)
+   throw Error("У редакторі ще не всі рядки. Додай потрібні блоки, а потім перевір.");
+  var parsed=compilePython(code);validateShape(parsed);
+  var output=execute(parsed,v),expected=m.expect(v);
   if(!matches(output,expected)){
-   var printed=output.length?output.join(" / "):"нічого не виводиться";
-   throw Error("Для "+m.v+" = "+v+" програма вивела «"+printed+"», а має: «"+(expected.join(" / ")||"нічого")+"». Перевір умови та текст у print.");
+   throw Error("Для "+m.v+" = "+v+" отримано «"+(output.join(" / ")||"нічого")+"», а потрібно «"+(expected.join(" / ")||"нічого")+"». Перевір порядок рядків.");
   }
-  if(!state.tests[state.level].includes(v))state.tests[state.level].push(v);
-  var done=state.tests[state.level].length===m.values.length;
-  if(done)state.complete[state.level]=true;
+  if(!state.tests[i].includes(v))state.tests[i].push(v);
+  state.complete[i]=state.tests[i].length===m.values.length;
   state.latestOutput=output.join(" • ")||"Нічого не виводиться";
-  state.notice=done?"✅ Усі значення перевірено! Місію виконано.":("✅ Правильно! Перевірено "+state.tests[state.level].length+" із "+m.values.length+" значень.");
+  state.notice=state.complete[i]?"✅ Усі тестові набори перевірено! Місію виконано.":"✅ Код спрацював! Перевір ще "+(m.values.length-state.tests[i].length)+" варіант(и).";
   state.noticeKind="good";
+  var mood=i===2?(v<30?"negative":v>70?"negative":"normal"):i===0?(v>20?"positive":"negative"):i===1?(v>=10?"positive":"negative"):(v>=30?"positive":"negative");
+  state.scene={level:i,input:v,phase:mood,outputs:output.slice(),correct:true,description:m.outcome(v)};
  }catch(err){
-  state.notice=err.message||"Помилка в коді.";state.noticeKind="bad";
+  state.failed[i]=(state.failed[i]||0)+1;
+  state.notice=String(err.message||"Помилка в коді.");
+  state.noticeKind="bad";
+  state.scene={level:i,input:v,phase:"error",outputs:[],correct:false,description:"Знайди неточність у порядку блоків."};
  }
  store();render();
+ scrollScene();
 }
+
 function showNotice(text,kind){state.notice=text;state.noticeKind=kind;store();render();}
 function changeLevel(next){
  state.level=next;state.notice="";state.noticeKind="";state.showHint=false;state.showSolution=false;store();render();
@@ -370,47 +433,128 @@ function nextLevel(){
  if(!checkpoint())return;
  changeLevel(Math.min(4,state.level+1));
 }
+
+const BLOCK_ORDER=[[1,0],[2,0,3,1],[4,2,0,5,1,3],[3,1,4,0,5,2]];
+const STEP_GUIDE=[
+ ["Почни з if: це умова, яку програма перевіряє.","Після if потрібна дія з відступом — команда print."],
+ ["Спочатку перевір умову за допомогою if.","Напиши дію, коли умова виконується.","Після цього додай else: — інший шлях.","Друга дія print має відступ 4 пробіли."],
+ ["if перевіряє перший випадок.","Команда print виконується за першої умови.","elif перевіряє іншу умову, якщо перша була хибна.","Додай дію print для elif.","else охоплює всі решта випадки.","Після else додай останню дію print."],
+ ["Напиши if для перевірки достатньої кількості монет.","Перший print повідомляє про покупку.","Другий print виконується в тій самій гілці if.","Тепер else — коли грошей недостатньо.","Перший print для else.","Другий print у тій самій гілці else."]
+];
+function solutionLines(i){return MISSIONS[i].solution.split("\n");}
+function blockDescription(line){
+ var t=line.trim();
+ if(t.startsWith("if "))return "Це if: умова визначає, чи виконуватимуться наступні команди.";
+ if(t.startsWith("elif "))return "Це elif: додаткова умова, яку перевіряють, якщо попередня не підійшла.";
+ if(t==="else:")return "Це else: дії для всіх випадків, коли умови if та elif хибні.";
+ if(t.startsWith("print("))return "Це print(): виведення повідомлення. Чотири пробіли показують, до якої гілки належить дія.";
+ return "Цей рядок є частиною програми.";
+}
+function codeFromBlocks(i){
+ var lines=solutionLines(i),selected=state.blocks[i]||[];
+ return selected.map(n=>lines[n]).join("\n");
+}
+function addBlock(idx){
+ var i=state.level,lines=solutionLines(i);
+ if(state.complete[i]||!Number.isInteger(idx)||idx<0||idx>=lines.length)return;
+ if(state.blocks[i].includes(idx))return;
+ state.blocks[i].push(idx);
+ state.code[i]=codeFromBlocks(i);
+ state.tests[i]=[];state.scene=null;
+ state.notice="";state.noticeKind="";
+ store();render();
+}
+function undoBlock(){
+ var i=state.level;if(state.complete[i]||!state.blocks[i].length)return;
+ state.blocks[i].pop();state.code[i]=codeFromBlocks(i);state.tests[i]=[];state.scene=null;
+ state.notice="";store();render();
+}
+function clearBlocks(){
+ var i=state.level;if(state.complete[i])return;
+ state.blocks[i]=[];state.code[i]="";state.tests[i]=[];state.scene=null;
+ state.notice="";store();render();
+}
+function scrollScene(){
+ var el=$("gameScene");
+ if(!el||!el.scrollIntoView)return;
+ try{if(el.focus)el.focus({preventScroll:true});}catch(e){}
+ var reduced=false;try{reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;}catch(e){}
+ var sticky=$("studentBar");
+ if(sticky&&typeof sticky.getBoundingClientRect==="function"){
+  el.style.scrollMarginTop=(Math.ceil(sticky.getBoundingClientRect().height)+16)+"px";
+ }
+ el.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"});
+}
 function sceneHTML(m){
- var n=state.tests[state.level].length;
- var reports=state.tests[state.level].map(v=>
-  '<div class="run-line good"><strong>'+m.v+' = '+v+'</strong> → '+(m.expect(v).map(safe).join(' • ')||"нічого не виводиться")+'</div>').join("");
- return '<aside class="panel"><div class="visual"><div class="emoji" aria-hidden="true">'+(n?m.picture(state.tests[state.level][n-1]):m.emoji)+'</div>'+
- '<div class="scene-title">'+m.scene+'</div><div class="scene-metric">'+n+' / '+m.values.length+' перевірок</div>'+
- '<div class="scene-hint">Програма повинна працювати з різними числами. Перевір граничні значення!</div></div>'+
- '<div class="side"><h3>🧠 Важливо зрозуміти</h3><p>'+m.explanation+'</p>'+
- '<div class="tip"><strong>Вхідні дані задає гра.</strong><p>Тобі не потрібно писати <code>input()</code> або <code>'+m.v+' = ...</code>. Напиши тільки розгалуження.</p></div>'+
- (n?'<h3>Вже перевірено</h3>'+reports:'<p>Натисни на тестове число після написання коду.</p>')+
- '</div></aside>';
+ var i=state.level,p=state.scene&&state.scene.level===i?state.scene:null;
+ var phase=p?p.phase:"idle",value=p?p.input:null;
+ var n=state.tests[i].length;
+ var icon=p?(p.correct?m.picture(value):"⚠️"):m.emoji;
+ var score=Math.round(n/m.values.length*100);
+ var outputs=p?(p.correct?(p.outputs.length?p.outputs:["Програма нічого не виводить — це правильно для неповного if."]):[state.notice]):[];
+ var label=p?(p.correct?"● PYTHON-КОД ВИКОНАНО":"● ПЕРЕВІРКА ЗНАЙШЛА ПОМИЛКУ"):"● ОЧІКУЄМО ЗАПУСКУ";
+ var outputHTML=outputs.map(x=>'<div class="'+(p.correct?(phase==="normal"?"normal":phase==="positive"?"positive":"negative"):"negative")+'">'+safe(x)+'</div>').join("");
+ var previous=state.tests[i].map(v=>'<div class="run-line good"><strong>'+m.v+' = '+v+'</strong> → '+(m.expect(v).map(safe).join(" • ")||"нічого не виводиться")+'</div>').join("");
+ return '<section class="quest-panel"><div class="quest-pad">'+
+ '<div class="section-head"><span class="section-number">4</span><div><span class="section-eyebrow">КРОК 4 · ДИВИСЬ, ЩО СТАЛОСЯ</span><h3>🎮 АНІМОВАНА СЦЕНА</h3></div></div>'+
+ '<div id="gameScene" tabindex="-1" class="game-scene" data-phase="'+phase+'" data-kind="'+i+'" aria-label="Результат перевірки програми">'+
+ '<div class="scene-hud"><span>'+safe(m.scene)+'</span><span class="scene-live">'+label+'</span></div>'+
+ '<div class="scene-world"><div class="world-emoji" aria-hidden="true">'+icon+'</div><div class="world-label">'+(p?m.v.toUpperCase()+" = "+value:"ГОТОВІ ДО ПЕРЕВІРКИ")+'</div>'+
+ '<div class="world-number">'+(p?(p.correct?m.outcome(value):"Помилка в коді"):"Натисни «Перевірити код»")+'</div></div>'+
+ '<div class="scene-details"><div class="micro">Перевірено тестових даних: <strong>'+n+' із '+m.values.length+'</strong></div>'+
+ '<div class="scene-meter"><span style="width:'+score+'%"></span></div>'+
+ (p?'<div class="scene-output"><strong>'+(p.correct?"Результат програми":"Що потрібно виправити")+'</strong>'+outputHTML+'</div>':'<p>Тут оживуть скарбниця, двері, температурна станція або магазин залежно від результату твого коду.</p>')+
+ (state.notice?'<div class="feedback '+(state.noticeKind==="bad"?"bad":"good")+'" role="status">'+safe(state.notice)+'</div>':'')+
+ (previous?'<div class="tip"><strong>Вже перевірено</strong>'+previous+'</div>':"")+
+ '</div></div></div></section>';
 }
 function missionHTML(){
- var m=current(),i=state.level,done=state.complete[i];
- var choices=m.values.map(n=>'<button type="button" class="testbtn '+(state.tests[i].includes(n)?"passed":"")+'" data-action="run" data-value="'+n+'"'+(state.tests[i].includes(n)||done?" disabled":"")+'>'+
-  (state.tests[i].includes(n)?"✅ ":"▶ ") +m.v+" = "+n+'</button>').join("");
- var hint=state.showHint?'<div class="hintbox"><strong>💡 Підказка</strong><p>'+m.hint+'</p><button type="button" class="toolbtn" data-action="skeleton">🧩 Вставити каркас</button></div>':"";
- var solution=state.showSolution?'<div class="hintbox"><strong>📖 Приклад правильного коду</strong><pre>'+safe(m.solution)+'</pre><span class="micro">Порівняй зі своїм кодом. Спробуй надрукувати власноруч.</span></div>':"";
+ var i=state.level,m=current(),done=state.complete[i];
+ var lines=solutionLines(i),ids=state.blocks[i]||[],chosen=state.activeTests[i];
+ if(!m.values.includes(chosen))chosen=m.values[0];
+ var displayCode=state.code[i]||codeFromBlocks(i);
+ var tokens=BLOCK_ORDER[i].map(n=>
+  '<button class="block-button" type="button" data-action="add-block" data-value="'+n+'" '+(done||ids.includes(n)?"disabled":"")+'>'+
+  '<code>'+safe(lines[n])+'</code><small>'+(lines[n].startsWith("    ")?"↳ команда з відступом":"↳ команда або умова")+'</small></button>').join("");
+ var explanation=ids.length?'<div class="block-feedback"><strong>💡 Що зробив цей блок?</strong><p>'+blockDescription(lines[ids[ids.length-1]])+
+ '</p><div class="block-next">'+(ids.length===lines.length?"Усі рядки зібрано! Обери тестові дані та перевір код.":"Наступний крок: "+STEP_GUIDE[i][ids.length])+'</div></div>':
+ '<div class="block-feedback"><strong>🧩 Як працювати?</strong><p>Натискай на готові рядки в правильному порядку. У редакторі вони складуть справжню Python-програму.</p><div class="block-next">'+STEP_GUIDE[i][0]+'</div></div>';
+ var choice=m.values.map(v=>'<button type="button" class="test-choice '+(chosen===v?"active ":"")+(state.tests[i].includes(v)?"passed":"")+
+ '" aria-pressed="'+(chosen===v)+'" data-action="select-test" data-value="'+v+'">'+(state.tests[i].includes(v)?"✓ ":"")+m.v+" = "+v+'</button>').join("");
+ var help=state.showHint?'<div class="hintbox"><strong>💡 Підказка</strong><p>'+m.hint+'</p></div>':"";
  var actions=i===2&&done?
-   '<div class="actions"><button type="button" class="btn primary" data-action="bonus">⭐ Спробувати бонус</button>'+
-   '<button type="button" class="btn secondary" data-action="end">🏁 Завершити основну частину (3/3)</button></div>':
-   (done?'<div class="actions"><button type="button" class="btn primary" data-action="next">'+(i===3?"🏆 Завершити бонус":"Зберегти та перейти →")+'</button></div>':"");
- return '<div class="workspace"><section class="panel"><div class="pad">'+
+ '<div class="actions"><button type="button" class="btn primary" data-action="bonus">⭐ Спробувати бонус</button><button type="button" class="btn secondary" data-action="end">🏁 Завершити основну частину (3/3)</button></div>':
+ done?'<div class="actions"><button type="button" class="btn primary" data-action="next">'+(i===3?"🏆 Завершити бонус":"💾 Зберегти та перейти →")+'</button></div>':"";
+ return '<div class="quest-stack">'+
+ '<section class="quest-panel"><div class="quest-pad">'+
  '<div class="kicker">'+m.tag+'</div><h2>'+m.title+'</h2><p class="lead">'+m.subtitle+'</p>'+
- '<div class="info">'+(i===3?"⭐ <strong>Бонус необов’язковий.</strong> Це завдання підвищеної складності для претендентів на найвищу оцінку.":"🎯 <strong>Важлива навичка:</strong> писати програму самостійно, а не просто вибирати відповідь.")+'</div>'+
- '<div class="task"><h3>Що має зробити програма?</h3><p>'+m.task+'</p>'+
- '<p class="micro">Код пишемо англійськими командами. Відступ після двокрапки — 4 пробіли. Текст у print має збігатися із завданням.</p></div>'+
- '<div class="editor"><div class="editor-top"><span>🐍 Python • твій редактор</span><span>'+m.v+' задає гра</span></div>'+
- '<textarea id="editor" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" aria-label="Редактор Python" '+(done?'disabled':'')+' placeholder="Напиши код тут. Наприклад: if ...:&#10;    print(...)">'+safe(state.code[i])+'</textarea></div>'+
- '<div class="toolbar"><button type="button" class="toolbtn" data-action="indent" '+(done?'disabled':'')+'>↳ 4 пробіли</button>'+
- '<button type="button" class="toolbtn" data-action="hint">'+(state.showHint?"Сховати підказку":"💡 Підказка")+'</button>'+
- (state.attempts[i]>=2?'<button type="button" class="toolbtn" data-action="solution">'+(state.showSolution?"Сховати зразок":"📖 Подивитися зразок")+'</button>':"")+
- '<button type="button" class="toolbtn" data-action="clear" '+(done?'disabled':'')+'>🧽 Очистити код</button></div>'+
- hint+solution+
- '<h3 style="margin:12px 0 7px;font-size:17px">Перевір код на різних значеннях</h3>'+
- '<p class="micro">Кожне число треба запустити окремо. Якщо зміниш код, перевірки почнуться заново.</p>'+
- '<div class="testlist">'+choices+'</div>'+
- (state.notice?'<div class="feedback '+(state.noticeKind==="bad"?"bad":"good")+'" role="status">'+safe(state.notice)+'</div>':"")+
- (done?'<div class="feedback good"><strong>✅ Місія виконана!</strong><p>Ти перевірив усі '+m.values.length+' набори даних.</p></div>':"")+
- actions+'</div></section>'+sceneHTML(m)+'</div>';
+ (i===3?'<div class="bonusgold">⭐ <strong>Бонус необов’язковий.</strong> По дві команди всередині кожної гілки — завдання підвищеної складності для тих, хто прагне високого рівня.</div>':"")+
+ '<div class="section-head"><span class="section-number">1</span><div><span class="section-eyebrow">КРОК 1 · ПРОЧИТАЙ УМОВУ</span><h3>📜 ЗАВДАННЯ</h3></div></div>'+
+ '<div class="task"><p>'+m.task+'</p></div>'+
+ '<div class="info"><strong>🧠 Пояснення:</strong> '+m.explanation+'</div>'+
+ '<p class="micro">Значення '+m.v+' вже задає гра. Команду input() писати не потрібно.</p></div></section>'+
+ '<section class="quest-panel"><div class="quest-pad">'+
+ '<div class="section-head"><span class="section-number">2</span><div><span class="section-eyebrow">КРОК 2 · СКЛАДИ ПРОГРАМУ</span><h3>⌨️ РЕДАКТОР КОДУ</h3></div></div>'+
+ '<div class="editor"><div class="editor-top"><span>🐍 Python · Складання з готових рядків</span><span>Рядків '+ids.length+'/'+lines.length+'</span></div>'+
+ '<textarea id="editor" readonly spellcheck="false" aria-label="Код із вибраних блоків" placeholder="Тут з’являться вибрані рядки Python">'+safe(displayCode)+'</textarea></div>'+
+ '<div class="toolbar"><button type="button" class="toolbtn" data-action="undo-block" '+(done||!ids.length?"disabled":"")+'>↶ Прибрати останній рядок</button>'+
+ '<button type="button" class="toolbtn" data-action="clear-blocks" '+(done||!ids.length?"disabled":"")+'>🧽 Очистити редактор</button>'+
+ '<button type="button" class="toolbtn" data-action="hint">'+(state.showHint?"Сховати підказку":"💡 Підказка")+'</button></div>'+
+ '<p class="block-help"><strong>Готові блоки коду:</strong> тут немає зайвих команд. Важливо скласти їх у правильному порядку. Відступи вже підготовлені.</p>'+
+ '<div class="block-grid" id="blockButtons">'+tokens+'</div>'+
+ explanation+help+'</div></section>'+
+ '<section class="quest-panel"><div class="quest-pad">'+
+ '<div class="section-head"><span class="section-number">3</span><div><span class="section-eyebrow">КРОК 3 · ОБЕРИ ЧИСЛО ДЛЯ ЗАПУСКУ</span><h3>🧪 ТЕСТОВІ ДАНІ</h3></div></div>'+
+ '<p class="lead">Вибери один набір даних і натисни <strong>«Перевірити код»</strong>. Потім повтори для інших чисел. Межі умов теж важливі!</p>'+
+ '<div class="test-chooser">'+choice+'</div>'+
+ '<div class="actions"><button type="button" class="btn primary" data-action="check" '+(done?"disabled":"")+'>▶ Перевірити код ⚡</button>'+
+ '<span class="micro">Перевірено '+state.tests[i].length+' з '+m.values.length+'</span></div>'+
+ '</div></section>'+
+ sceneHTML(m)+
+ (done?'<section class="quest-panel"><div class="quest-pad"><div class="feedback good"><strong>✅ Усі тести пройдено!</strong><p>Ти побачив, як Python обирає різні гілки залежно від умов.</p></div>'+actions+'</div></section>':"")+
+ '</div>';
 }
+
 function finishHTML(){
  var bonus=state.complete[3],core=state.complete.slice(0,3).filter(Boolean).length;
  return '<div class="workspace"><section class="panel"><div class="pad"><div class="kicker">ЗАВДАННЯ З PYTHON ВИКОНАНО</div>'+
@@ -439,44 +583,30 @@ function render(){
  $("app").innerHTML=isFinish?finishHTML():missionHTML();
  formatHeader();
 }
-function changeCode(text){
- if(state.complete[state.level])return;
- if(state.code[state.level]!==text){
-  state.code[state.level]=text;state.tests[state.level]=[];state.latestOutput="";
-  state.notice="";state.noticeKind="";store();render(); // rerender is normally not used for each keypress; see editor input below
- }
-}
-function insertAtCursor(el,text){
- var a=el.selectionStart,b=el.selectionEnd;
- el.value=el.value.slice(0,a)+text+el.value.slice(b);
- el.selectionStart=el.selectionEnd=a+text.length;el.focus();
- handleEditorUpdate(el.value);
-}
-function handleEditorUpdate(value){
- if(state.level>=4||state.complete[state.level])return;
- if(state.code[state.level]===value)return;
- state.code[state.level]=value;state.tests[state.level]=[];state.notice="";state.noticeKind="";store();
- // Avoid replacing the active textarea on every keystroke (important for typing).
- $("levels").innerHTML=MISSIONS.map((x,i)=>'<div class="pip '+(state.complete[i]?"done":state.level===i?"active":"")+(i===3?" bonus":"")+'">'+(state.complete[i]?"✓":i===3?"⭐ бонус":i+1)+'</div>').join("");
- var testButtons=document.querySelectorAll(".testbtn");testButtons.forEach(b=>{b.classList.remove("passed");b.disabled=false;b.textContent="▶ "+current().v+" = "+b.getAttribute("data-value")});
-}
 function interact(action,value){
- if(action==="hint"){if(!state.showHint){state.hints[state.level]++;}state.showHint=!state.showHint;store();render();return;}
- if(action==="solution"){state.showSolution=!state.showSolution;store();render();return;}
- if(action==="skeleton"){if(state.level>=4||state.complete[state.level])return;state.code[state.level]=current().skeleton;state.tests[state.level]=[];state.notice="";state.noticeKind="";store();render();$("editor").focus();return;}
- if(action==="clear"){if(state.level>=4||state.complete[state.level])return;state.code[state.level]="";state.tests[state.level]=[];state.notice="";store();render();$("editor").focus();return;}
- if(action==="indent"){var ed=$("editor");if(ed)insertAtCursor(ed,"    ");return;}
- if(action==="run"){var num=Number(value);if(current().values.includes(num))testValue(num);return;}
+ if(action==="hint"){if(!state.showHint)state.hints[state.level]++;state.showHint=!state.showHint;store();render();return;}
+ if(action==="add-block"){addBlock(Number(value));return;}
+ if(action==="undo-block"){undoBlock();return;}
+ if(action==="clear-blocks"){clearBlocks();return;}
+ if(action==="select-test"){
+  var num=Number(value);if(!current().values.includes(num))return;
+  state.activeTests[state.level]=num;store();render();return;
+ }
+ if(action==="check"){
+  var num=state.activeTests[state.level];
+  if(!current().values.includes(num))num=current().values[0];
+  testValue(num);return;
+ }
  if(action==="next"){nextLevel();return;}
  if(action==="bonus"){finishMandatory("bonus");return;}
  if(action==="end"){finishMandatory("end");return;}
  if(action==="start-bonus"){if(state.complete[2])changeLevel(3);return;}
  if(action==="copy"){
-  var text="Академія рішень • Частина 2. "+state.student.klass+", група "+state.student.group+", "+state.student.surname+" "+state.student.first+
+  var out="Академія рішень • Частина 2. "+state.student.klass+", група "+state.student.group+", "+state.student.surname+" "+state.student.first+
     ". Основні місії: "+state.complete.slice(0,3).filter(Boolean).length+"/3. Бонус: "+(state.complete[3]?"так":"ні")+".";
-  Promise.resolve(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(text):Promise.reject(Error("copy")))
+  Promise.resolve(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(out):Promise.reject(Error("copy")))
     .then(()=>$("copyResult").textContent="✅ Результат скопійовано.")
-    .catch(()=>$("copyResult").textContent=text);
+    .catch(()=>$("copyResult").textContent=out);
   return;
  }
 }
@@ -485,16 +615,10 @@ document.addEventListener("click",ev=>{
  interact(t.getAttribute("data-action"),t.getAttribute("data-value"));
 });
 document.addEventListener("input",ev=>{
- if(ev.target.id==="editor"){handleEditorUpdate(ev.target.value);return;}
  if(["first","surname","klass","group"].includes(ev.target.id)&&!state.locked){readProfile();alertSync("💾 Дані учня збережено в браузері; після місії надішлемо звіт.",false);}
 });
 document.addEventListener("change",ev=>{
  if(["first","surname","klass","group"].includes(ev.target.id)&&!state.locked){readProfile();alertSync("💾 Дані учня готові.",false);}
-});
-document.addEventListener("keydown",ev=>{
- if(ev.target.id==="editor"&&ev.key==="Tab"){
-  ev.preventDefault();insertAtCursor(ev.target,"    ");
- }
 });
 $("retry").addEventListener("click",()=>{
  if(!state.locked){ensureProfile();return;}
